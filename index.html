@@ -12,10 +12,12 @@
       text-align: center;
       margin: 0;
       overflow-x: hidden;
+      position: relative;
     }
 
     .spotify {
       margin-top: 20px;
+      z-index: 1;
     }
 
     .carrossel-container {
@@ -26,12 +28,14 @@
       overflow: hidden;
       border-radius: 20px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+      z-index: 1;
     }
 
     .carrossel {
       display: flex;
-      transition: transform 0.5s ease-in-out;
+      width: 9999px;
       height: 100%;
+      transition: transform 0.5s ease-in-out;
     }
 
     .carrossel img {
@@ -39,6 +43,7 @@
       height: 320px;
       object-fit: cover;
       border-radius: 20px;
+      flex-shrink: 0;
     }
 
     .titulo {
@@ -59,22 +64,24 @@
       border-top: 1px solid #666;
       padding-top: 20px;
       margin-bottom: 50px;
+      z-index: 1;
+      position: relative;
     }
 
     .heart {
-      position: fixed;
+      position: absolute;
       width: 20px;
       height: 20px;
       background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
       background-size: contain;
-      animation: fall 6s linear infinite;
+      animation: fall 6s linear forwards;
       opacity: 0.3;
-      z-index: 10;
+      z-index: 5;
       pointer-events: none;
     }
 
     @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 0.3; }
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
@@ -145,11 +152,12 @@
       carrossel.style.transform = `translateX(-${index * 320}px)`;
     }, 3000);
 
-    // Chuva de corações
+    // Chuva de corações por toda a tela
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.top = '-40px';
       heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
