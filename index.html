@@ -10,8 +10,9 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
       margin: 0;
+      padding: 20px;
+      overflow-x: hidden;
     }
     .spotify {
       margin-top: 20px;
@@ -46,61 +47,84 @@
     }
     .heart {
       position: fixed;
+      top: -30px;
       width: 20px;
       height: 20px;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
       background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.3;
       animation: fall 5s linear infinite;
+      pointer-events: none;
     }
     @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
   <div class="spotify">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2dLLR6qlu5UJ5gk0dKz0h3?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe style="border-radius:12px" 
+      src="https://open.spotify.com/embed/track/3h7zQ1LZxYy4C4S63kqEzK?utm_source=generator" 
+      width="300" height="80" frameborder="0" allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy">
+    </iframe>
   </div>
 
-  <div class="fotos">
-    <img src="foto1.jpg" alt="Foto do casal 1" class="foto" />
-    <img src="foto2.jpg" alt="Foto do casal 2" class="foto" />
-  </div>
-
-  <div class="titulo">eu te amo há</div>
+  <div class="titulo">Eu te amo, Luis!</div>
   <div class="contador" id="contador"></div>
 
+  <div class="fotos">
+    <img src="foto1.jpg" class="foto" />
+    <img src="foto2.jpg" class="foto" />
+  </div>
+
   <div class="mensagem">
-    A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado, eu te amo, Luis!
+    Obrigada por cada momento lindo, cada sorriso, cada abraço e por estar sempre comigo. Você é o amor da minha vida!
   </div>
 
   <script>
+    // Contador de tempo
     function atualizarContador() {
-      const inicio = new Date('2022-06-04T00:00:00');
+      const inicio = new Date("2022-06-04T00:00:00");
       const agora = new Date();
-      const diff = agora - inicio;
 
-      const anos = agora.getFullYear() - inicio.getFullYear();
-      const meses = agora.getMonth() - inicio.getMonth() + anos * 12;
-      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutos = Math.floor((diff / (1000 * 60)) % 60);
-      const segundos = Math.floor((diff / 1000) % 60);
+      let anos = agora.getFullYear() - inicio.getFullYear();
+      let meses = agora.getMonth() - inicio.getMonth();
+      let dias = agora.getDate() - inicio.getDate();
 
-      document.getElementById('contador').innerText =
-        `${Math.floor(meses / 12)} anos, ${meses % 12} meses, ${dias % 30} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+      if (dias < 0) {
+        meses -= 1;
+        dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+      }
+      if (meses < 0) {
+        anos -= 1;
+        meses += 12;
+      }
+
+      document.getElementById("contador").innerText =
+        `Estamos juntos há ${anos} anos, ${meses} meses e ${dias} dias.`;
     }
-    setInterval(atualizarContador, 1000);
-    atualizarContador();
 
+    atualizarContador();
+    setInterval(atualizarContador, 60 * 1000); // Atualiza a cada minuto
+
+    // Criar corações
     setInterval(() => {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => heart.remove(), 6000);
     }, 300);
   </script>
 </body>
