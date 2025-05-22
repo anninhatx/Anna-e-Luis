@@ -10,38 +10,40 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
       margin: 0;
+      overflow-x: hidden;
     }
 
     .spotify {
       margin-top: 20px;
     }
 
-    .carousel {
+    .carrossel-container {
       position: relative;
-      width: 90%;
-      max-width: 500px;
+      width: 320px;
+      height: 320px;
       margin: 30px auto;
       overflow: hidden;
       border-radius: 20px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
     }
 
-    .carousel-track {
+    .carrossel {
       display: flex;
       transition: transform 0.5s ease-in-out;
-      width: 100%;
+      height: 100%;
     }
 
-    .carousel img {
-      width: 100%;
-      flex-shrink: 0;
+    .carrossel img {
+      width: 320px;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 20px;
     }
 
     .titulo {
       font-size: 24px;
-      margin-bottom: 10px;
+      margin-top: 20px;
     }
 
     .contador {
@@ -56,6 +58,7 @@
       font-size: 16px;
       border-top: 1px solid #666;
       padding-top: 20px;
+      margin-bottom: 50px;
     }
 
     .heart {
@@ -64,30 +67,31 @@
       height: 20px;
       background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
       background-size: contain;
-      animation: fall 5s linear infinite;
-      opacity: 0.6;
+      animation: fall 6s linear infinite;
+      opacity: 0.3;
+      z-index: 10;
       pointer-events: none;
     }
 
     @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0.3; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
   <div class="spotify">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator&autoplay=1" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
-  <div class="carousel">
-    <div class="carousel-track" id="carousel-track">
-      <img src="foto2.jpg" alt="Foto do casal 2" />
-      <img src="foto1.jpg" alt="Foto do casal 1" />
-      <img src="foto3.jpg" alt="Foto do casal 3" />
-      <img src="foto4.jpg" alt="Foto do casal 4" />
-      <img src="foto5.jpg" alt="Foto do casal 5" />
-      <img src="foto6.jpg" alt="Foto do casal 6" />
+  <div class="carrossel-container">
+    <div class="carrossel" id="carrossel">
+      <img src="foto2.jpg" alt="Foto 2" />
+      <img src="foto1.jpg" alt="Foto 1" />
+      <img src="foto3.jpg" alt="Foto 3" />
+      <img src="foto4.jpg" alt="Foto 4" />
+      <img src="foto5.jpg" alt="Foto 5" />
+      <img src="foto6.jpg" alt="Foto 6" />
     </div>
   </div>
 
@@ -99,6 +103,7 @@
   </div>
 
   <script>
+    // Contador desde 04/06/2022
     function atualizarContador() {
       const inicio = new Date('2022-06-04T00:00:00');
       const agora = new Date();
@@ -118,35 +123,37 @@
         meses += 12;
       }
 
-      const horas = agora.getHours();
-      const minutos = agora.getMinutes();
-      const segundos = agora.getSeconds();
+      const diff = agora - inicio;
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
 
       document.getElementById('contador').innerText =
-        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
+        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
     }
 
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
+    // Carrossel automático
+    const carrossel = document.getElementById('carrossel');
+    const totalSlides = carrossel.children.length;
+    let index = 0;
+
+    setInterval(() => {
+      index = (index + 1) % totalSlides;
+      carrossel.style.transform = `translateX(-${index * 320}px)`;
+    }, 3000);
+
+    // Chuva de corações
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => heart.remove(), 6000);
     }, 300);
-
-    // Carrossel automático
-    const track = document.getElementById('carousel-track');
-    const slides = track.children.length;
-    let index = 0;
-
-    setInterval(() => {
-      index = (index + 1) % slides;
-      track.style.transform = `translateX(-${index * 100}%)`;
-    }, 3000);
   </script>
 </body>
 </html>
