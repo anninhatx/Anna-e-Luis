@@ -12,7 +12,6 @@
       text-align: center;
       padding: 20px;
       margin: 0;
-      overflow-x: hidden;
     }
 
     .spotify {
@@ -21,8 +20,9 @@
 
     .carousel {
       position: relative;
-      width: 300px;
-      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      margin: 30px auto;
       overflow: hidden;
       border-radius: 20px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
@@ -31,27 +31,12 @@
     .carousel-track {
       display: flex;
       transition: transform 0.5s ease-in-out;
+      width: 100%;
     }
 
     .carousel img {
-      width: 300px;
-      height: auto;
-      border-radius: 20px;
+      width: 100%;
       flex-shrink: 0;
-    }
-
-    .carousel-buttons {
-      margin-top: 10px;
-    }
-
-    .carousel-buttons button {
-      background-color: #fff;
-      color: #000;
-      border: none;
-      padding: 8px 12px;
-      margin: 0 5px;
-      border-radius: 8px;
-      cursor: pointer;
     }
 
     .titulo {
@@ -74,25 +59,19 @@
     }
 
     .heart {
-      position: absolute;
+      position: fixed;
       width: 20px;
       height: 20px;
       background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
       background-size: contain;
       animation: fall 5s linear infinite;
-      opacity: 0.4;
+      opacity: 0.6;
       pointer-events: none;
-      z-index: 2;
     }
 
     @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 0.4; }
-      100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
-    }
-
-    .carousel-container {
-      position: relative;
-      z-index: 1;
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
@@ -101,16 +80,14 @@
     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
-  <div class="carousel-container" id="carousel-container">
-    <div class="carousel">
-      <div class="carousel-track" id="carousel-track">
-        <img src="foto1.jpg" alt="Foto do casal 1" />
-        <img src="foto2.jpg" alt="Foto do casal 2" />
-      </div>
-    </div>
-    <div class="carousel-buttons">
-      <button onclick="mudarFoto(-1)">◀</button>
-      <button onclick="mudarFoto(1)">▶</button>
+  <div class="carousel">
+    <div class="carousel-track" id="carousel-track">
+      <img src="foto2.jpg" alt="Foto do casal 2" />
+      <img src="foto1.jpg" alt="Foto do casal 1" />
+      <img src="foto3.jpg" alt="Foto do casal 3" />
+      <img src="foto4.jpg" alt="Foto do casal 4" />
+      <img src="foto5.jpg" alt="Foto do casal 5" />
+      <img src="foto6.jpg" alt="Foto do casal 6" />
     </div>
   </div>
 
@@ -132,9 +109,10 @@
 
       if (dias < 0) {
         meses--;
-        const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
-        dias += ultimoMes.getDate();
+        const mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
+        dias += mesAnterior.getDate();
       }
+
       if (meses < 0) {
         anos--;
         meses += 12;
@@ -151,26 +129,24 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // Corações caindo na div do carrossel
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.top = '-20px';
+      heart.style.left = Math.random() * 100 + 'vw';
       heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-
-      document.getElementById('carousel-container').appendChild(heart);
+      document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
     }, 300);
 
-    // Carrossel
+    // Carrossel automático
+    const track = document.getElementById('carousel-track');
+    const slides = track.children.length;
     let index = 0;
-    function mudarFoto(direcao) {
-      const track = document.getElementById('carousel-track');
-      const total = track.children.length;
-      index = (index + direcao + total) % total;
-      track.style.transform = `translateX(-${index * 300}px)`;
-    }
+
+    setInterval(() => {
+      index = (index + 1) % slides;
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }, 3000);
   </script>
 </body>
 </html>
