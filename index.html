@@ -11,7 +11,7 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
-      overflow: hidden;
+      margin: 0;
     }
     .spotify {
       margin-top: 20px;
@@ -60,7 +60,7 @@
 </head>
 <body>
   <div class="spotify">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator" width="80%" height="80" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2dLLR6qlu5UJ5gk0dKz0h3?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
   <div class="fotos">
@@ -94,7 +94,6 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // Chuva de corações
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
