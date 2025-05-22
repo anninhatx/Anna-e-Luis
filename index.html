@@ -14,31 +14,56 @@
       margin: 0;
       overflow-x: hidden;
     }
+
     .spotify {
       margin-top: 20px;
     }
-    .fotos {
+
+    .carousel {
       position: relative;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin: 20px 0;
-      z-index: 1;
-    }
-    .foto {
       width: 300px;
+      margin: 20px auto;
+      overflow: hidden;
       border-radius: 20px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
     }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel img {
+      width: 300px;
+      height: auto;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    .carousel-buttons {
+      margin-top: 10px;
+    }
+
+    .carousel-buttons button {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
     .titulo {
       font-size: 24px;
       margin-bottom: 10px;
     }
+
     .contador {
       font-size: 18px;
       margin-bottom: 30px;
     }
+
     .mensagem {
       max-width: 600px;
       margin: 0 auto;
@@ -47,6 +72,7 @@
       border-top: 1px solid #666;
       padding-top: 20px;
     }
+
     .heart {
       position: absolute;
       width: 20px;
@@ -58,9 +84,15 @@
       pointer-events: none;
       z-index: 2;
     }
+
     @keyframes fall {
       0% { transform: translateY(-100px) rotate(0deg); opacity: 0.4; }
       100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+    }
+
+    .carousel-container {
+      position: relative;
+      z-index: 1;
     }
   </style>
 </head>
@@ -69,9 +101,17 @@
     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
-  <div class="fotos" id="fotos">
-    <img src="foto1.jpg" alt="Foto do casal 1" class="foto" />
-    <img src="foto2.jpg" alt="Foto do casal 2" class="foto" />
+  <div class="carousel-container" id="carousel-container">
+    <div class="carousel">
+      <div class="carousel-track" id="carousel-track">
+        <img src="foto1.jpg" alt="Foto do casal 1" />
+        <img src="foto2.jpg" alt="Foto do casal 2" />
+      </div>
+    </div>
+    <div class="carousel-buttons">
+      <button onclick="mudarFoto(-1)">◀</button>
+      <button onclick="mudarFoto(1)">▶</button>
+    </div>
   </div>
 
   <div class="titulo">eu te amo há</div>
@@ -111,7 +151,7 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // Chuva de corações sobre a div .fotos
+    // Corações caindo na div do carrossel
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
@@ -119,9 +159,18 @@
       heart.style.top = '-20px';
       heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
 
-      document.getElementById('fotos').appendChild(heart);
+      document.getElementById('carousel-container').appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
     }, 300);
+
+    // Carrossel
+    let index = 0;
+    function mudarFoto(direcao) {
+      const track = document.getElementById('carousel-track');
+      const total = track.children.length;
+      index = (index + direcao + total) % total;
+      track.style.transform = `translateX(-${index * 300}px)`;
+    }
   </script>
 </body>
 </html>
