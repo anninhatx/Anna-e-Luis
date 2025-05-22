@@ -24,12 +24,12 @@
       gap: 20px;
       flex-wrap: wrap;
       margin: 20px 0;
+      z-index: 1;
     }
     .foto {
       width: 300px;
       border-radius: 20px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-      z-index: 1;
     }
     .titulo {
       font-size: 24px;
@@ -48,7 +48,7 @@
       padding-top: 20px;
     }
     .heart {
-      position: fixed;
+      position: absolute;
       width: 20px;
       height: 20px;
       background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
@@ -60,7 +60,7 @@
     }
     @keyframes fall {
       0% { transform: translateY(-100px) rotate(0deg); opacity: 0.4; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
@@ -69,7 +69,7 @@
     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
-  <div class="fotos">
+  <div class="fotos" id="fotos">
     <img src="foto1.jpg" alt="Foto do casal 1" class="foto" />
     <img src="foto2.jpg" alt="Foto do casal 2" class="foto" />
   </div>
@@ -78,7 +78,7 @@
   <div class="contador" id="contador"></div>
 
   <div class="mensagem">
-    A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!
+    A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado, eu te amo, Luis!
   </div>
 
   <script>
@@ -100,24 +100,26 @@
         meses += 12;
       }
 
-      const diff = agora - inicio;
       const horas = agora.getHours();
       const minutos = agora.getMinutes();
       const segundos = agora.getSeconds();
 
       document.getElementById('contador').innerText =
-        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos. Desde 4 de junho de 2022. Obrigada.`;
+        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
     }
 
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
+    // Chuva de corações sobre a div .fotos
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.top = '-20px';
       heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      document.body.appendChild(heart);
+
+      document.getElementById('fotos').appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
     }, 300);
   </script>
