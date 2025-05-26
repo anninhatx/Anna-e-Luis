@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quiz Romântico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
   <style>
     body {
       background-color: black;
@@ -112,7 +112,7 @@
         ]
       },
       {
-        texto: "Em qual mês de 2022 eu fui na sua casa pela primeira vez?",
+        texto: "Em qual mês de 2022 eu fui na sua casa pela primeira vez? (fiquei lá até meia noite e você me explicou sobre Jojo)",
         respostas: [
           { texto: "janeiro" },
           { texto: "fevereiro" },
@@ -192,8 +192,7 @@
       });
 
       if (todasCorretas) {
-        document.getElementById("mensagemFinal").innerText =
-          "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
+        document.getElementById("mensagemFinal").innerText = "Você acertou todas! ❤️";
         document.getElementById("proximaPagina").style.display = "block";
         iniciarChuvaDeCoracoes();
       } else {
