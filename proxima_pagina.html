@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eu te amo, Luis!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
   <style>
     body {
       background-color: #000;
@@ -14,11 +14,25 @@
       margin: 0;
       overflow-x: hidden;
       position: relative;
+      padding: 20px;
     }
 
     .spotify {
       margin-top: 20px;
       z-index: 1;
+    }
+
+    .frase {
+      margin-top: 10px;
+      font-size: 18px;
+      font-style: italic;
+      color: #ff6f91;
+      font-weight: 500;
+      white-space: pre-line;
+      user-select: none;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .carrossel-container {
@@ -50,6 +64,7 @@
     .titulo {
       font-size: 24px;
       margin-top: 20px;
+      font-weight: bold;
     }
 
     .contador {
@@ -61,14 +76,12 @@
       max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
-      font-size: 18px;
+      font-size: 16px;
       border-top: 1px solid #666;
       padding-top: 20px;
       margin-bottom: 50px;
       z-index: 1;
       position: relative;
-      text-align: center;
-      min-height: 100px;
       white-space: pre-wrap;
     }
 
@@ -92,8 +105,17 @@
 </head>
 <body>
   <div class="spotify">
-    <!-- Música com autoplay -->
-    <iframe id="player" style="border-radius:12px" src="https://open.spotify.com/embed/track/5CbDKqtF6F6m1KUvsAf2Kf?utm_source=generator&autoplay=1" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/0tGYxqRGfL2HDi5d0PaETs?utm_source=generator&autoplay=1"
+      width="80%"
+      height="80"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      allowfullscreen
+    ></iframe>
+    <div class="frase">after all this time, <br>i'm still into you!</div>
   </div>
 
   <div class="carrossel-container">
@@ -110,7 +132,9 @@
   <div class="titulo">eu te amo há</div>
   <div class="contador" id="contador"></div>
 
-  <div class="mensagem" id="mensagem"></div>
+  <div class="mensagem">
+    A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!❤️
+  </div>
 
   <script>
     // Contador desde 04/06/2022
@@ -165,23 +189,6 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
     }, 300);
-
-    // Efeito de máquina de escrever
-    const texto = "A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!❤️";
-
-    let i = 0;
-    const velocidade = 20; // menor = mais rápido
-    const elMensagem = document.getElementById("mensagem");
-
-    function digitar() {
-      if (i < texto.length) {
-        elMensagem.innerHTML += texto.charAt(i);
-        i++;
-        setTimeout(digitar, velocidade);
-      }
-    }
-
-    window.addEventListener("load", digitar);
   </script>
 </body>
 </html>
