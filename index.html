@@ -2,182 +2,224 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quiz do Amor</title>
   <style>
     body {
-      background-color: black;
+      background-color: #000;
       color: white;
-      font-family: Arial, sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .intro {
+      text-align: center;
+      font-size: 24px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
       padding: 20px;
     }
 
     .question {
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
     .question h3 {
-      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
     }
 
     .option {
       background-color: white;
       color: black;
-      border: none;
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
-      text-align: left;
+      padding: 12px 18px;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-size: 18px;
+      border: 3px solid transparent;
+      transition: border 0.3s;
     }
 
     .option.selected {
-      border: 2px solid #ccc;
+      border: 3px solid #00f;
     }
 
     .option.correct {
-      background-color: #4CAF50;
-      color: white;
+      background-color: #0f0;
+      color: #000;
     }
 
     .option.incorrect {
-      background-color: #F44336;
-      color: white;
+      background-color: #f00;
+      color: #000;
     }
 
-    #confirmar, #refazer, #proxima {
+    .confirm-button, .retry-button, .next-button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
       background-color: white;
       color: black;
-      border: none;
-      padding: 15px 30px;
-      font-size: 16px;
-      border-radius: 20px;
       cursor: pointer;
-      margin-top: 20px;
     }
 
-    #mensagemFinal {
-      margin-top: 30px;
-      font-size: 18px;
+    .message {
       text-align: center;
+      font-size: 20px;
+      margin-top: 30px;
     }
 
-    .seta {
-      font-size: 40px;
-      cursor: pointer;
-      display: block;
-      margin: 10px auto;
+    .heart {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: fall 6s linear forwards;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <form id="quizForm">
-    <div class="question" data-answer="0">
+  <div class="intro">Depois de 3 anos juntinhos, quero ver se você ainda lembra dos detalhes da nossa história…</div>
+  <div class="quiz-container" id="quiz">
+    <!-- Pergunta 1 -->
+    <div class="question" data-answer="11 de junho">
       <h3>Qual foi a data do nosso primeiro beijo?</h3>
-      <button type="button" class="option">11 de junho</button>
-      <button type="button" class="option">04 de junho</button>
-      <button type="button" class="option">12 de junho</button>
-      <button type="button" class="option">05 de junho</button>
+      <div class="options">
+        <div class="option">11 de junho</div>
+        <div class="option">04 de junho</div>
+        <div class="option">12 de junho</div>
+        <div class="option">05 de junho</div>
+      </div>
     </div>
 
-    <div class="question" data-answer="1">
-      <h3>Qual é o meu filme favorito?</h3>
-      <button type="button" class="option">Barbie escola de princesas</button>
-      <button type="button" class="option">Enrolados</button>
-      <button type="button" class="option">Cruella live action</button>
-      <button type="button" class="option">Moana</button>
+    <!-- Pergunta 2 -->
+    <div class="question" data-answer="março">
+      <h3>Em qual mês de 2022 eu fui na sua casa pela primeira vez? (fiquei lá até meia noite e você me explicou sobre Jojo)</h3>
+      <div class="options">
+        <div class="option">janeiro</div>
+        <div class="option">fevereiro</div>
+        <div class="option">março</div>
+        <div class="option">abril</div>
+      </div>
     </div>
 
-    <div class="question" data-answer="2">
-      <h3>Em qual mês de 2022 eu fui na sua casa pela primeira vez?</h3>
-      <button type="button" class="option">janeiro</button>
-      <button type="button" class="option">fevereiro</button>
-      <button type="button" class="option">março</button>
-      <button type="button" class="option">abril</button>
-    </div>
-
-    <div class="question" data-answer="1">
+    <!-- Pergunta 3 -->
+    <div class="question" data-answer="observamos a lua">
       <h3>O que fizemos em comemoração ao primeiro mês de namoro?</h3>
-      <button type="button" class="option">fomos em uma lanchonete</button>
-      <button type="button" class="option">observamos a lua</button>
-      <button type="button" class="option">fizemos uma receita</button>
-      <button type="button" class="option">nenhuma das opções</button>
+      <div class="options">
+        <div class="option">fomos em uma lanchonete</div>
+        <div class="option">observamos a lua</div>
+        <div class="option">fizemos uma receita</div>
+        <div class="option">nenhuma das opções</div>
+      </div>
     </div>
 
-    <div class="question" data-answer="3">
+    <!-- Pergunta 4 -->
+    <div class="question" data-answer="tcholinha">
       <h3>Qual foi o primeiro apelido que te dei?</h3>
-      <button type="button" class="option">mor</button>
-      <button type="button" class="option">bor</button>
-      <button type="button" class="option">isi</button>
-      <button type="button" class="option">tcholinha</button>
+      <div class="options">
+        <div class="option">mor</div>
+        <div class="option">bor</div>
+        <div class="option">isi</div>
+        <div class="option">tcholinha</div>
+      </div>
     </div>
 
-    <div class="question" data-answer="2">
+    <!-- Pergunta 5 -->
+    <div class="question" data-answer="fomos no supermercado">
       <h3>O que fizemos após o pedido de namoro?</h3>
-      <button type="button" class="option">assistimos outro filme</button>
-      <button type="button" class="option">fomos na sorveteria</button>
-      <button type="button" class="option">fomos no supermercado</button>
-      <button type="button" class="option">jantamos</button>
+      <div class="options">
+        <div class="option">assistimos outro filme</div>
+        <div class="option">fomos na sorveteria</div>
+        <div class="option">fomos no supermercado</div>
+        <div class="option">jantamos</div>
+      </div>
     </div>
 
-    <button id="confirmar" type="button">Confirmar Respostas</button>
-    <button id="refazer" type="button" style="display:none;">Refazer</button>
-    <div id="mensagemFinal"></div>
-    <a id="proxima" href="pagina2.html" style="display:none;">
-      <div class="seta">➡️</div>
-    </a>
-  </form>
+    <button class="confirm-button" onclick="verificarRespostas()">Confirmar Respostas</button>
+    <div class="message" id="mensagem"></div>
+    <button class="retry-button" style="display:none" onclick="location.reload()">Refazer</button>
+    <a href="pagina2.html"><button class="next-button" style="display:none">➡️</button></a>
+  </div>
 
   <script>
-    const options = document.querySelectorAll('.option');
-    options.forEach(option => {
-      option.addEventListener('click', () => {
-        const siblings = option.parentElement.querySelectorAll('.option');
-        siblings.forEach(sib => sib.classList.remove('selected'));
-        option.classList.add('selected');
+    const opcoes = document.querySelectorAll('.option');
+    opcoes.forEach(op => {
+      op.addEventListener('click', () => {
+        const parent = op.parentElement;
+        parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        op.classList.add('selected');
       });
     });
 
-    document.getElementById('confirmar').addEventListener('click', () => {
-      const questions = document.querySelectorAll('.question');
-      let allCorrect = true;
+    function criarChuvaCoracoes() {
+      const interval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = '-40px';
+        heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }, 200);
 
-      questions.forEach((question, qIndex) => {
-        const selected = question.querySelector('.option.selected');
-        const correctIndex = parseInt(question.dataset.answer);
-        const options = question.querySelectorAll('.option');
+      setTimeout(() => clearInterval(interval), 4000);
+    }
 
-        options.forEach((opt, i) => {
-          opt.disabled = true;
-          if (i === correctIndex) {
-            opt.classList.add('correct');
-          }
-          if (opt === selected && i !== correctIndex) {
-            opt.classList.add('incorrect');
-            allCorrect = false;
-          }
-        });
+    function verificarRespostas() {
+      const perguntas = document.querySelectorAll('.question');
+      let todasCorretas = true;
 
-        if (!selected || [...options].indexOf(selected) !== correctIndex) {
-          allCorrect = false;
+      perguntas.forEach(pergunta => {
+        const correta = pergunta.getAttribute('data-answer');
+        const selecionada = pergunta.querySelector('.option.selected');
+
+        pergunta.querySelectorAll('.option').forEach(o => o.classList.remove('correct', 'incorrect'));
+
+        if (!selecionada || selecionada.textContent.trim() !== correta.trim()) {
+          todasCorretas = false;
+          if (selecionada) selecionada.classList.add('incorrect');
+        } else {
+          selecionada.classList.add('correct');
         }
       });
 
-      if (allCorrect) {
-        document.getElementById('mensagemFinal').innerText = 'Parabéns, agora posso te passar pra próxima página!';
-        document.getElementById('proxima').style.display = 'block';
-        document.getElementById('confirmar').style.display = 'none';
-      } else {
-        document.getElementById('mensagemFinal').innerText = 'Você errou algumas respostas. Que tal tentar de novo?';
-        document.getElementById('refazer').style.display = 'inline-block';
-        document.getElementById('confirmar').style.display = 'none';
-      }
-    });
+      const msg = document.getElementById('mensagem');
+      const retryBtn = document.querySelector('.retry-button');
+      const nextBtn = document.querySelector('.next-button');
 
-    document.getElementById('refazer').addEventListener('click', () => {
-      location.reload();
-    });
+      if (todasCorretas) {
+        msg.innerText = 'Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️';
+        nextBtn.style.display = 'block';
+        criarChuvaCoracoes();
+      } else {
+        msg.innerText = 'Algumas respostas estão erradas! Tente novamente!';
+        retryBtn.style.display = 'block';
+      }
+    }
   </script>
 </body>
 </html>
