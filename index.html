@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz do Amor</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .question {
+      margin-bottom: 40px;
+    }
+
+    .question h3 {
+      margin-bottom: 10px;
+    }
+
+    .option {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      text-align: left;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .option.selected {
+      border: 2px solid #ccc;
+    }
+
+    .option.correct {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .option.incorrect {
+      background-color: #F44336;
+      color: white;
+    }
+
+    #confirmar, #refazer, #proxima {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #mensagemFinal {
+      margin-top: 30px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .seta {
+      font-size: 40px;
+      cursor: pointer;
+      display: block;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+  <form id="quizForm">
+    <div class="question" data-answer="0">
+      <h3>Qual foi a data do nosso primeiro beijo?</h3>
+      <button type="button" class="option">11 de junho</button>
+      <button type="button" class="option">04 de junho</button>
+      <button type="button" class="option">12 de junho</button>
+      <button type="button" class="option">05 de junho</button>
+    </div>
+
+    <div class="question" data-answer="1">
+      <h3>Qual é o meu filme favorito?</h3>
+      <button type="button" class="option">Barbie escola de princesas</button>
+      <button type="button" class="option">Enrolados</button>
+      <button type="button" class="option">Cruella live action</button>
+      <button type="button" class="option">Moana</button>
+    </div>
+
+    <div class="question" data-answer="2">
+      <h3>Em qual mês de 2022 eu fui na sua casa pela primeira vez?</h3>
+      <button type="button" class="option">janeiro</button>
+      <button type="button" class="option">fevereiro</button>
+      <button type="button" class="option">março</button>
+      <button type="button" class="option">abril</button>
+    </div>
+
+    <div class="question" data-answer="1">
+      <h3>O que fizemos em comemoração ao primeiro mês de namoro?</h3>
+      <button type="button" class="option">fomos em uma lanchonete</button>
+      <button type="button" class="option">observamos a lua</button>
+      <button type="button" class="option">fizemos uma receita</button>
+      <button type="button" class="option">nenhuma das opções</button>
+    </div>
+
+    <div class="question" data-answer="3">
+      <h3>Qual foi o primeiro apelido que te dei?</h3>
+      <button type="button" class="option">mor</button>
+      <button type="button" class="option">bor</button>
+      <button type="button" class="option">isi</button>
+      <button type="button" class="option">tcholinha</button>
+    </div>
+
+    <div class="question" data-answer="2">
+      <h3>O que fizemos após o pedido de namoro?</h3>
+      <button type="button" class="option">assistimos outro filme</button>
+      <button type="button" class="option">fomos na sorveteria</button>
+      <button type="button" class="option">fomos no supermercado</button>
+      <button type="button" class="option">jantamos</button>
+    </div>
+
+    <button id="confirmar" type="button">Confirmar Respostas</button>
+    <button id="refazer" type="button" style="display:none;">Refazer</button>
+    <div id="mensagemFinal"></div>
+    <a id="proxima" href="pagina2.html" style="display:none;">
+      <div class="seta">➡️</div>
+    </a>
+  </form>
+
+  <script>
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        const siblings = option.parentElement.querySelectorAll('.option');
+        siblings.forEach(sib => sib.classList.remove('selected'));
+        option.classList.add('selected');
+      });
+    });
+
+    document.getElementById('confirmar').addEventListener('click', () => {
+      const questions = document.querySelectorAll('.question');
+      let allCorrect = true;
+
+      questions.forEach((question, qIndex) => {
+        const selected = question.querySelector('.option.selected');
+        const correctIndex = parseInt(question.dataset.answer);
+        const options = question.querySelectorAll('.option');
+
+        options.forEach((opt, i) => {
+          opt.disabled = true;
+          if (i === correctIndex) {
+            opt.classList.add('correct');
+          }
+          if (opt === selected && i !== correctIndex) {
+            opt.classList.add('incorrect');
+            allCorrect = false;
+          }
+        });
+
+        if (!selected || [...options].indexOf(selected) !== correctIndex) {
+          allCorrect = false;
+        }
+      });
+
+      if (allCorrect) {
+        document.getElementById('mensagemFinal').innerText = 'Parabéns, agora posso te passar pra próxima página!';
+        document.getElementById('proxima').style.display = 'block';
+        document.getElementById('confirmar').style.display = 'none';
+      } else {
+        document.getElementById('mensagemFinal').innerText = 'Você errou algumas respostas. Que tal tentar de novo?';
+        document.getElementById('refazer').style.display = 'inline-block';
+        document.getElementById('confirmar').style.display = 'none';
+      }
+    });
+
+    document.getElementById('refazer').addEventListener('click', () => {
+      location.reload();
+    });
+  </script>
+</body>
+</html>
