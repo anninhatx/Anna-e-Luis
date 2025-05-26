@@ -3,226 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz do Amor</title>
+  <title>Quiz Romântico</title>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: black;
       color: white;
       font-family: 'Patrick Hand', cursive;
+      padding: 20px;
       text-align: center;
-      padding: 30px 10px;
+      overflow-x: hidden;
+      position: relative;
     }
-
-    h1 {
+    .intro {
       font-size: 24px;
       margin-bottom: 30px;
     }
-
     .question {
-      margin-bottom: 30px;
-    }
-
-    .question h2 {
+      margin: 30px 0 10px;
       font-size: 22px;
-      margin-bottom: 10px;
+      font-weight: bold;
     }
-
     .options {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
     }
-
     .option {
       background-color: white;
       color: black;
-      padding: 10px 15px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 300px;
-      font-size: 18px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border 0.3s;
-    }
-
-    .option.selected {
-      border: 2px solid #00aaff;
-    }
-
-    .option.correct {
-      background-color: #00cc44;
-      color: white;
-    }
-
-    .option.incorrect {
-      background-color: #cc0033;
-      color: white;
-    }
-
-    #confirmar {
-      background-color: #fff;
-      color: black;
-      font-size: 18px;
-      border: none;
       padding: 10px 20px;
       border-radius: 10px;
       cursor: pointer;
-      margin-top: 20px;
+      width: 80%;
+      max-width: 400px;
+      font-size: 20px;
+      transition: border 0.3s;
+      border: 2px solid transparent;
     }
-
-    #mensagemFinal {
+    .option.selected {
+      border: 2px solid #00f;
+    }
+    .option.correct {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .option.incorrect {
+      background-color: #f44336;
+      color: white;
+    }
+    .btn {
       margin-top: 30px;
-      font-size: 22px;
-      color: #ff5e9c;
+      padding: 12px 25px;
+      font-size: 20px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
-      background-size: contain;
-      animation: fall 6s linear forwards;
-      opacity: 0.3;
-      z-index: 5;
-      pointer-events: none;
+    .result {
+      font-size: 20px;
+      margin-top: 30px;
     }
-
-    @keyframes fall {
-      0% { transform: translateY(-40px) rotate(0deg); opacity: 0.5; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
     .next-page {
       margin-top: 20px;
       font-size: 20px;
       display: none;
     }
-
-    .next-page a {
-      color: #00ccff;
-      text-decoration: none;
-      font-size: 24px;
+    .heart {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: fall 6s linear forwards;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 5;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Depois de 3 anos juntinhos, quero ver se você ainda lembra dos detalhes da nossa história…</h1>
+  <div class="intro">Depois de 3 anos juntinhos, quero ver se você ainda lembra dos detalhes da nossa história…</div>
 
-  <form id="quiz">
-    <div class="question" data-answer="11 de junho">
-      <h2>Qual foi a data do nosso primeiro beijo?</h2>
-      <div class="options">
-        <div class="option">11 de junho</div>
-        <div class="option">04 de junho</div>
-        <div class="option">12 de junho</div>
-        <div class="option">05 de junho</div>
-      </div>
-    </div>
-
-    <div class="question" data-answer="março">
-      <h2>Em qual mês de 2022 eu fui na sua casa pela primeira vez?<br>(fiquei lá até meia noite e você me explicou sobre Jojo)</h2>
-      <div class="options">
-        <div class="option">janeiro</div>
-        <div class="option">fevereiro</div>
-        <div class="option">março</div>
-        <div class="option">abril</div>
-      </div>
-    </div>
-
-    <div class="question" data-answer="observamos a lua">
-      <h2>O que fizemos em comemoração ao primeiro mês de namoro?</h2>
-      <div class="options">
-        <div class="option">fomos em uma lanchonete</div>
-        <div class="option">observamos a lua</div>
-        <div class="option">fizemos uma receita</div>
-        <div class="option">nenhuma das opções</div>
-      </div>
-    </div>
-
-    <div class="question" data-answer="tcholinha">
-      <h2>Qual foi o primeiro apelido que te dei?</h2>
-      <div class="options">
-        <div class="option">mor</div>
-        <div class="option">bor</div>
-        <div class="option">isi</div>
-        <div class="option">tcholinha</div>
-      </div>
-    </div>
-
-    <div class="question" data-answer="fomos no supermercado">
-      <h2>O que fizemos após o pedido de namoro?</h2>
-      <div class="options">
-        <div class="option">assistimos outro filme</div>
-        <div class="option">fomos na sorveteria</div>
-        <div class="option">fomos no supermercado</div>
-        <div class="option">jantamos</div>
-      </div>
-    </div>
-
-    <button type="button" id="confirmar">Confirmar respostas</button>
-  </form>
-
-  <div id="mensagemFinal"></div>
-  <div class="next-page" id="nextPage">
-    <a href="proxima_pagina.html">&rarr; Ir para a próxima página</a>
+  <div id="quiz"></div>
+  <button class="btn" onclick="verificarRespostas()">Confirmar Respostas</button>
+  <div class="result" id="mensagemFinal"></div>
+  <div class="next-page" id="proximaPagina">
+    Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️<br>
+    <a href="proxima_pagina.html">👉</a>
   </div>
 
   <script>
-    // Selecionar opções
-    document.querySelectorAll('.option').forEach(option => {
-      option.addEventListener('click', () => {
-        const parent = option.parentElement;
-        parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-      });
-    });
-
-    // Verificar respostas
-    document.getElementById('confirmar').addEventListener('click', () => {
-      let allCorrect = true;
-      document.querySelectorAll('.question').forEach(question => {
-        const selected = question.querySelector('.option.selected');
-        const correct = question.dataset.answer;
-
-        if (!selected) {
-          allCorrect = false;
-          return;
-        }
-
-        if (selected.textContent.trim() === correct.trim()) {
-          selected.classList.add('correct');
-        } else {
-          selected.classList.add('incorrect');
-          allCorrect = false;
-        }
-      });
-
-      if (allCorrect) {
-        document.getElementById('mensagemFinal').innerHTML =
-          'Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️';
-        document.getElementById('nextPage').style.display = 'block';
-        iniciarChuvaCoracoes();
-      } else {
-        document.getElementById('mensagemFinal').innerText = 'Você errou alguma. Tente novamente!';
+    const perguntas = [
+      {
+        texto: "Qual foi a data do nosso primeiro beijo?",
+        respostas: [
+          { texto: "11 de junho", correta: true },
+          { texto: "04 de junho" },
+          { texto: "12 de junho" },
+          { texto: "05 de junho" }
+        ]
+      },
+      {
+        texto: "Em qual mês de 2022 eu fui na sua casa pela primeira vez?",
+        respostas: [
+          { texto: "janeiro" },
+          { texto: "fevereiro" },
+          { texto: "março", correta: true },
+          { texto: "abril" }
+        ]
+      },
+      {
+        texto: "O que fizemos em comemoração ao primeiro mês de namoro?",
+        respostas: [
+          { texto: "fomos em uma lanchonete" },
+          { texto: "observamos a lua", correta: true },
+          { texto: "fizemos uma receita" },
+          { texto: "nenhuma das opções" }
+        ]
+      },
+      {
+        texto: "Qual foi o primeiro apelido que te dei?",
+        respostas: [
+          { texto: "mor" },
+          { texto: "bor" },
+          { texto: "isi" },
+          { texto: "tcholinha", correta: true }
+        ]
+      },
+      {
+        texto: "O que fizemos após o pedido de namoro?",
+        respostas: [
+          { texto: "assistimos outro filme" },
+          { texto: "fomos na sorveteria" },
+          { texto: "fomos no supermercado", correta: true },
+          { texto: "jantamos" }
+        ]
       }
+    ];
+
+    const quizContainer = document.getElementById("quiz");
+
+    perguntas.forEach((pergunta, i) => {
+      const div = document.createElement("div");
+      div.innerHTML = `<div class="question">${pergunta.texto}</div>`;
+
+      const opcoesDiv = document.createElement("div");
+      opcoesDiv.classList.add("options");
+
+      pergunta.respostas.forEach((resposta, j) => {
+        const btn = document.createElement("div");
+        btn.classList.add("option");
+        btn.innerText = resposta.texto;
+        btn.onclick = () => {
+          Array.from(opcoesDiv.children).forEach(el => el.classList.remove("selected"));
+          btn.classList.add("selected");
+          pergunta.selecionada = j;
+        };
+        opcoesDiv.appendChild(btn);
+      });
+
+      div.appendChild(opcoesDiv);
+      quizContainer.appendChild(div);
     });
 
-    function iniciarChuvaCoracoes() {
-      const intervalo = setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.top = window.scrollY + 'px';
-        heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 7000);
-      }, 300);
+    function verificarRespostas() {
+      let todasCorretas = true;
+      perguntas.forEach((pergunta, i) => {
+        const opcoes = quizContainer.children[i].querySelectorAll(".option");
+        opcoes.forEach((opcao, j) => {
+          opcao.classList.remove("correct", "incorrect");
+          if (j === pergunta.selecionada) {
+            if (pergunta.respostas[j].correta) {
+              opcao.classList.add("correct");
+            } else {
+              opcao.classList.add("incorrect");
+              todasCorretas = false;
+            }
+          }
+        });
+      });
 
-      setTimeout(() => clearInterval(intervalo), 7000);
+      if (todasCorretas) {
+        document.getElementById("mensagemFinal").innerText =
+          "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
+        document.getElementById("proximaPagina").style.display = "block";
+        iniciarChuvaDeCoracoes();
+      } else {
+        document.getElementById("mensagemFinal").innerText =
+          "Algumas respostas estão erradas... tente novamente!";
+        document.getElementById("proximaPagina").style.display = "none";
+      }
+    }
+
+    function iniciarChuvaDeCoracoes() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = "-40px";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }, 300);
     }
   </script>
 </body>
