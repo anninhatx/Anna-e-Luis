@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiz Romântico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: black;
@@ -62,6 +62,7 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      font-family: 'Patrick Hand', cursive;
     }
     .result {
       font-size: 20px;
@@ -71,6 +72,18 @@
       margin-top: 20px;
       font-size: 20px;
       display: none;
+    }
+    #refazer-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff4d4d;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Patrick Hand', cursive;
     }
     .heart {
       position: absolute;
@@ -96,9 +109,9 @@
   <button class="btn" onclick="verificarRespostas()">Confirmar Respostas</button>
   <div class="result" id="mensagemFinal"></div>
   <div class="next-page" id="proximaPagina">
-    Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️<br>
-    <a href="proxima_pagina.html">👉</a>
+    <a href="proxima_pagina.html">👉 Ir para a próxima página</a>
   </div>
+  <button id="refazer-btn" onclick="refazer()">Refazer</button>
 
   <script>
     const perguntas = [
@@ -176,6 +189,7 @@
 
     function verificarRespostas() {
       let todasCorretas = true;
+
       perguntas.forEach((pergunta, i) => {
         const opcoes = quizContainer.children[i].querySelectorAll(".option");
         opcoes.forEach((opcao, j) => {
@@ -192,14 +206,21 @@
       });
 
       if (todasCorretas) {
-        document.getElementById("mensagemFinal").innerText = "Você acertou todas! ❤️";
+        document.getElementById("mensagemFinal").innerText =
+          "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
         document.getElementById("proximaPagina").style.display = "block";
+        document.getElementById("refazer-btn").style.display = "none";
         iniciarChuvaDeCoracoes();
       } else {
         document.getElementById("mensagemFinal").innerText =
           "Algumas respostas estão erradas... tente novamente!";
         document.getElementById("proximaPagina").style.display = "none";
+        document.getElementById("refazer-btn").style.display = "inline-block";
       }
+    }
+
+    function refazer() {
+      location.reload();
     }
 
     function iniciarChuvaDeCoracoes() {
