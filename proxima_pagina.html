@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eu te amo, Luis!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: black;
+      background-color: #000;
       color: white;
       font-family: 'Patrick Hand', cursive;
       text-align: center;
@@ -15,21 +15,18 @@
       overflow-x: hidden;
       position: relative;
     }
-    .youtube-player {
-      margin: 20px auto 10px;
-      width: 80%;
-      max-width: 560px;
-      height: 315px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+
+    .spotify {
+      margin-top: 20px;
+      z-index: 1;
     }
-    .frase {
+
+    .frase-musica {
+      color: #ffb6c1;
       font-size: 18px;
-      font-weight: 400;
-      color: #f8f8f8cc;
-      margin-bottom: 40px;
-      white-space: pre-line; /* respeita quebras de linha */
+      margin-top: 10px;
     }
+
     .carrossel-container {
       position: relative;
       width: 320px;
@@ -40,12 +37,14 @@
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
       z-index: 1;
     }
+
     .carrossel {
       display: flex;
       width: 9999px;
       height: 100%;
       transition: transform 0.5s ease-in-out;
     }
+
     .carrossel img {
       width: 320px;
       height: 320px;
@@ -53,14 +52,17 @@
       border-radius: 20px;
       flex-shrink: 0;
     }
+
     .titulo {
       font-size: 24px;
       margin-top: 20px;
     }
+
     .contador {
       font-size: 18px;
       margin-bottom: 30px;
     }
+
     .mensagem {
       max-width: 600px;
       margin: 0 auto;
@@ -71,8 +73,8 @@
       margin-bottom: 50px;
       z-index: 1;
       position: relative;
-      text-align: center;
     }
+
     .heart {
       position: absolute;
       width: 20px;
@@ -84,6 +86,7 @@
       z-index: 5;
       pointer-events: none;
     }
+
     @keyframes fall {
       0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
@@ -91,22 +94,9 @@
   </style>
 </head>
 <body>
-
-  <div class="youtube-player">
-    <iframe
-      width="100%"
-      height="315"
-      src="https://www.youtube.com/embed/6zM7Vz0uB9I?autoplay=1&mute=1"
-      title="Still Into You - Paramore"
-      frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen
-      ></iframe>
-  </div>
-
-  <div class="frase">
-    after all this time, <br />
-    i'm still into you!
+  <div class="spotify">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1DuJbbC8fbZY06dcXx4IhP?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="frase-musica">você é a sorte e a sortuda sou eu!</div>
   </div>
 
   <div class="carrossel-container">
@@ -123,9 +113,7 @@
   <div class="titulo">eu te amo há</div>
   <div class="contador" id="contador"></div>
 
-  <div class="mensagem">
-    A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!❤️
-  </div>
+  <div class="mensagem" id="mensagemFinal"></div>
 
   <script>
     // Contador desde 04/06/2022
@@ -170,7 +158,7 @@
       carrossel.style.transform = `translateX(-${index * 320}px)`;
     }, 3000);
 
-    // Chuva de corações por toda a tela
+    // Chuva de corações
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
@@ -180,6 +168,18 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
     }, 300);
+
+    // Efeito máquina de escrever (rápido)
+    const texto = "A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!❤️";
+    let i = 0;
+    function digitar() {
+      if (i < texto.length) {
+        document.getElementById('mensagemFinal').innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(digitar, 15); // velocidade ajustada
+      }
+    }
+    digitar();
   </script>
 </body>
 </html>
