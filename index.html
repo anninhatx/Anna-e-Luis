@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz Romântico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: black;
@@ -15,25 +15,21 @@
       overflow-x: hidden;
       position: relative;
     }
-
     .intro {
       font-size: 24px;
       margin-bottom: 30px;
     }
-
     .question {
       margin: 30px 0 10px;
       font-size: 22px;
       font-weight: bold;
     }
-
     .options {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
     }
-
     .option {
       background-color: white;
       color: black;
@@ -46,21 +42,17 @@
       transition: border 0.3s;
       border: 2px solid transparent;
     }
-
     .option.selected {
       border: 2px solid #00f;
     }
-
     .option.correct {
       background-color: #4CAF50;
       color: white;
     }
-
     .option.incorrect {
       background-color: #f44336;
       color: white;
     }
-
     .btn {
       margin-top: 30px;
       padding: 12px 25px;
@@ -71,23 +63,20 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
     .result {
       font-size: 20px;
       margin-top: 30px;
+      display: none;
     }
-
     .next-page {
       margin-top: 20px;
       font-size: 20px;
       display: none;
     }
-
-    .retry {
+    .refazer {
       margin-top: 20px;
       display: none;
     }
-
     .heart {
       position: absolute;
       width: 24px;
@@ -99,16 +88,9 @@
       pointer-events: none;
       z-index: 5;
     }
-
     @keyframes fall {
-      0% {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(var(--altura-final, 100vh)) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
@@ -116,16 +98,12 @@
   <div class="intro">Depois de 3 anos juntinhos, quero ver se você ainda lembra dos detalhes da nossa história…</div>
 
   <div id="quiz"></div>
-
   <button class="btn" onclick="verificarRespostas()">Confirmar Respostas</button>
-
   <div class="result" id="mensagemFinal"></div>
-
   <div class="next-page" id="proximaPagina">
     <a href="proxima_pagina.html">👉 Ir para a próxima página</a>
   </div>
-
-  <div class="retry">
+  <div class="refazer" id="refazerQuiz">
     <button class="btn" onclick="location.reload()">Refazer</button>
   </div>
 
@@ -180,23 +158,22 @@
 
     const quizContainer = document.getElementById("quiz");
 
-    perguntas.forEach((pergunta, index) => {
+    perguntas.forEach((pergunta, i) => {
       const div = document.createElement("div");
       div.innerHTML = `<div class="question">${pergunta.texto}</div>`;
+
       const opcoesDiv = document.createElement("div");
       opcoesDiv.classList.add("options");
 
-      pergunta.respostas.forEach((resposta, i) => {
+      pergunta.respostas.forEach((resposta, j) => {
         const btn = document.createElement("div");
         btn.classList.add("option");
         btn.innerText = resposta.texto;
-
-        btn.addEventListener("click", () => {
-          Array.from(opcoesDiv.children).forEach(opt => opt.classList.remove("selected"));
+        btn.onclick = () => {
+          Array.from(opcoesDiv.children).forEach(el => el.classList.remove("selected"));
           btn.classList.add("selected");
-          pergunta.selecionada = i;
-        });
-
+          pergunta.selecionada = j;
+        };
         opcoesDiv.appendChild(btn);
       });
 
@@ -209,10 +186,8 @@
 
       perguntas.forEach((pergunta, i) => {
         const opcoes = quizContainer.children[i].querySelectorAll(".option");
-
         opcoes.forEach((opcao, j) => {
           opcao.classList.remove("correct", "incorrect");
-
           if (j === pergunta.selecionada) {
             if (pergunta.respostas[j].correta) {
               opcao.classList.add("correct");
@@ -224,19 +199,24 @@
         });
       });
 
-      const msg = document.getElementById("mensagemFinal");
-      const proxima = document.getElementById("proximaPagina");
-      const retry = document.querySelector(".retry");
+      const mensagemFinal = document.getElementById("mensagemFinal");
+      const proximaPagina = document.getElementById("proximaPagina");
+      const refazerQuiz = document.getElementById("refazerQuiz");
 
       if (todasCorretas) {
-        msg.innerText = "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
-        proxima.style.display = "block";
-        retry.style.display = "none";
+        mensagemFinal.innerText = "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
+        mensagemFinal.style.display = "block";
+        proximaPagina.style.display = "block";
+        refazerQuiz.style.display = "none";
         iniciarChuvaDeCoracoes();
+
+        // Scroll para a mensagem final
+        mensagemFinal.scrollIntoView({ behavior: "smooth" });
       } else {
-        msg.innerText = "Algumas respostas estão erradas... tente novamente!";
-        proxima.style.display = "none";
-        retry.style.display = "block";
+        mensagemFinal.innerText = "Algumas respostas estão erradas... tente novamente!";
+        mensagemFinal.style.display = "block";
+        proximaPagina.style.display = "none";
+        refazerQuiz.style.display = "block";
       }
     }
 
@@ -246,8 +226,6 @@
         heart.className = "heart";
         heart.style.left = Math.random() * window.innerWidth + "px";
         heart.style.top = "-40px";
-        const alturaPagina = document.body.scrollHeight;
-        heart.style.setProperty('--altura-final', alturaPagina + 'px');
         heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 6000);
