@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz Romântico</title>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
@@ -14,26 +14,23 @@
       text-align: center;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
     }
-
     .intro {
       font-size: 24px;
       margin-bottom: 30px;
     }
-
     .question {
       margin: 30px 0 10px;
       font-size: 22px;
       font-weight: bold;
     }
-
     .options {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
     }
-
     .option {
       background-color: white;
       color: black;
@@ -46,21 +43,17 @@
       transition: border 0.3s;
       border: 2px solid transparent;
     }
-
     .option.selected {
       border: 2px solid #00f;
     }
-
     .option.correct {
       background-color: #4CAF50;
       color: white;
     }
-
     .option.incorrect {
       background-color: #f44336;
       color: white;
     }
-
     .btn {
       margin-top: 30px;
       padding: 12px 25px;
@@ -71,37 +64,20 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
     .result {
       font-size: 20px;
       margin-top: 30px;
+      display: none;
     }
-
     .next-page {
       margin-top: 20px;
       font-size: 20px;
       display: none;
     }
-
     .refazer {
       margin-top: 20px;
-      font-size: 18px;
-      color: white;
-      text-decoration: underline;
-      cursor: pointer;
       display: none;
     }
-
-    .chuva-container {
-      position: absolute;
-      top: 200%;
-      left: 0;
-      width: 100%;
-      height: 200px;
-      pointer-events: none;
-      overflow: visible;
-    }
-
     .heart {
       position: absolute;
       width: 24px;
@@ -110,27 +86,27 @@
       background-size: contain;
       animation: fall 6s linear forwards;
       opacity: 0.3;
+      pointer-events: none;
       z-index: 5;
     }
-
     @keyframes fall {
       0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
-      100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(200vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
   <div class="intro">Depois de 3 anos juntinhos, quero ver se você ainda lembra dos detalhes da nossa história…</div>
+
   <div id="quiz"></div>
   <button class="btn" onclick="verificarRespostas()">Confirmar Respostas</button>
   <div class="result" id="mensagemFinal"></div>
   <div class="next-page" id="proximaPagina">
-    Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️<br>
-    <a href="proxima_pagina.html">👉</a>
+    <a href="proxima_pagina.html">👉 Ir para a próxima página</a>
   </div>
-  <div class="refazer" id="refazer" onclick="location.reload()">Refazer Quiz</div>
-
-  <div class="chuva-container" id="chuvaContainer"></div>
+  <div class="refazer" id="refazerQuiz">
+    <button class="btn" onclick="location.reload()">Refazer</button>
+  </div>
 
   <script>
     const perguntas = [
@@ -144,7 +120,7 @@
         ]
       },
       {
-        texto: "Em qual mês de 2022 eu fui na sua casa pela primeira vez?",
+        texto: "Em qual mês de 2022 eu fui na sua casa pela primeira vez? (fiquei lá até meia noite e você me explicou sobre Jojo)",
         respostas: [
           { texto: "janeiro" },
           { texto: "fevereiro" },
@@ -186,6 +162,7 @@
     perguntas.forEach((pergunta, i) => {
       const div = document.createElement("div");
       div.innerHTML = `<div class="question">${pergunta.texto}</div>`;
+
       const opcoesDiv = document.createElement("div");
       opcoesDiv.classList.add("options");
 
@@ -207,6 +184,7 @@
 
     function verificarRespostas() {
       let todasCorretas = true;
+
       perguntas.forEach((pergunta, i) => {
         const opcoes = quizContainer.children[i].querySelectorAll(".option");
         opcoes.forEach((opcao, j) => {
@@ -222,35 +200,39 @@
         });
       });
 
-      const mensagem = document.getElementById("mensagemFinal");
-      const proxima = document.getElementById("proximaPagina");
-      const refazer = document.getElementById("refazer");
+      const mensagemFinal = document.getElementById("mensagemFinal");
+      const proximaPagina = document.getElementById("proximaPagina");
+      const refazerQuiz = document.getElementById("refazerQuiz");
 
       if (todasCorretas) {
-        mensagem.innerText = "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
-        proxima.style.display = "block";
-        refazer.style.display = "none";
+        mensagemFinal.innerText = "Parabéns meu amor!! Você realmente lembra da nossa história, agora vá para próxima página❤️";
+        mensagemFinal.style.display = "block";
+        proximaPagina.style.display = "block";
+        refazerQuiz.style.display = "none";
         iniciarChuvaDeCoracoes();
-        document.getElementById("mensagemFinal").scrollIntoView({ behavior: "smooth" });
+
+        // Scroll para a mensagem final
+        mensagemFinal.scrollIntoView({ behavior: "smooth" });
       } else {
-        mensagem.innerText = "Algumas respostas estão erradas... tente novamente!";
-        proxima.style.display = "none";
-        refazer.style.display = "block";
+        mensagemFinal.innerText = "Algumas respostas estão erradas... tente novamente!";
+        mensagemFinal.style.display = "block";
+        proximaPagina.style.display = "none";
+        refazerQuiz.style.display = "block";
       }
     }
 
     function iniciarChuvaDeCoracoes() {
-      const container = document.getElementById('chuvaContainer');
-      const interval = setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.top = '0px';
-        heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-        container.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }, 100);
-      setTimeout(() => clearInterval(interval), 8000); // Chuva dura 8 segundos
+      setInterval(() => {
+        for (let i = 0; i < 3; i++) {  // 3 corações por vez para mais intensidade
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.top = "-40px";
+          heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 7000);
+        }
+      }, 200); // intervalo mais curto
     }
   </script>
 </body>
