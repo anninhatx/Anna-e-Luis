@@ -36,4 +36,121 @@
       margin-top: 10px;
       cursor: pointer;
       border-radius: 8px;
-      font-si
+      font-size: 16px;
+    }
+
+    #mensagemFinal {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #222;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 18px;
+      display: none;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: fall 6s linear forwards;
+      opacity: 0.3;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .refazer {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Vamos ver se você lembra, amor 💖</h1>
+
+  <form id="quizForm">
+    <div class="pergunta">
+      <strong>1. Em que dia começamos a namorar?</strong>
+      <label><input type="radio" name="p1" value="errado" /> 14 de fevereiro de 2020</label>
+      <label><input type="radio" name="p1" value="certo" /> 4 de junho de 2020</label>
+      <label><input type="radio" name="p1" value="errado" /> 7 de setembro de 2020</label>
+    </div>
+
+    <div class="pergunta">
+      <strong>2. Qual o nosso apelido um para o outro?</strong>
+      <label><input type="radio" name="p2" value="errado" /> Bebê e neném</label>
+      <label><input type="radio" name="p2" value="errado" /> Amor e vida</label>
+      <label><input type="radio" name="p2" value="certo" /> Sorte e sortuda</label>
+    </div>
+
+    <div class="pergunta">
+      <strong>3. Qual a nossa música especial?</strong>
+      <label><input type="radio" name="p3" value="errado" /> Trem Bala - Ana Vilela</label>
+      <label><input type="radio" name="p3" value="certo" /> Sorte - Diego & Victor Hugo</label>
+      <label><input type="radio" name="p3" value="errado" /> Fotografia - Leoni</label>
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="mensagemFinal">
+    <h2>Parabéns, meu amor!! ❤️</h2>
+    <p>Você realmente lembra da nossa história, agora vá para a próxima página!</p>
+    <a href="segunda.html"><button>Ir para a próxima página</button></a>
+  </div>
+
+  <div class="refazer" id="refazerDiv">
+    <button onclick="location.reload()">Refazer</button>
+  </div>
+
+  <script>
+    const form = document.getElementById("quizForm");
+    const mensagemFinal = document.getElementById("mensagemFinal");
+    const refazerDiv = document.getElementById("refazerDiv");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const p1 = form.p1.value;
+      const p2 = form.p2.value;
+      const p3 = form.p3.value;
+
+      if (p1 === "certo" && p2 === "certo" && p3 === "certo") {
+        mensagemFinal.style.display = "block";
+        setTimeout(() => {
+          mensagemFinal.scrollIntoView({ behavior: "smooth" });
+        }, 200);
+        iniciarChuvaDeCoracoes();
+      } else {
+        alert("Você errou alguma resposta... tente novamente com carinho! 💔");
+        refazerDiv.style.display = "block";
+      }
+    });
+
+    function iniciarChuvaDeCoracoes() {
+      const mensagemEl = document.getElementById("mensagemFinal");
+      const rect = mensagemEl.getBoundingClientRect();
+      const offsetTop = rect.top + window.scrollY;
+
+      setInterval(() => {
+        for (let i = 0; i < 4; i++) {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.top = offsetTop + (Math.random() * 100 - 50) + "px";
+          heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 7000);
+        }
+      }, 200);
+    }
+  </script>
+</body>
+</html>
