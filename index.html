@@ -14,6 +14,7 @@
       text-align: center;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
     }
     .intro {
       font-size: 24px;
@@ -90,7 +91,7 @@
     }
     @keyframes fall {
       0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(200vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
@@ -222,14 +223,16 @@
 
     function iniciarChuvaDeCoracoes() {
       setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.top = "-40px";
-        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }, 300);
+        for (let i = 0; i < 3; i++) {  // 3 corações por vez para mais intensidade
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.top = "-40px";
+          heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 7000);
+        }
+      }, 200); // intervalo mais curto
     }
   </script>
 </body>
