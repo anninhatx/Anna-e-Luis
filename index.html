@@ -105,7 +105,7 @@
     <a href="proxima_pagina.html">👉 Ir para a próxima página</a>
   </div>
   <div class="refazer" id="refazerQuiz">
-    <button class="btn" onclick="location.reload()">Refazer</button>
+    <button class="btn" onclick="refazerQuiz()">Refazer</button>
   </div>
 
   <script>
@@ -211,19 +211,25 @@
         refazerQuiz.style.display = "none";
         iniciarChuvaDeCoracoes();
 
-        // Scroll para a mensagem final
         mensagemFinal.scrollIntoView({ behavior: "smooth" });
       } else {
         mensagemFinal.innerText = "Algumas respostas estão erradas... tente novamente!";
         mensagemFinal.style.display = "block";
         proximaPagina.style.display = "none";
         refazerQuiz.style.display = "block";
+
+        refazerQuiz.scrollIntoView({ behavior: "smooth" });
       }
+    }
+
+    function refazerQuiz() {
+      window.scrollTo({ top: 0, behavior: "auto" });
+      location.reload();
     }
 
     function iniciarChuvaDeCoracoes() {
       setInterval(() => {
-        for (let i = 0; i < 3; i++) {  // 3 corações por vez para mais intensidade
+        for (let i = 0; i < 3; i++) {
           const heart = document.createElement("div");
           heart.className = "heart";
           heart.style.left = Math.random() * window.innerWidth + "px";
@@ -232,7 +238,7 @@
           document.body.appendChild(heart);
           setTimeout(() => heart.remove(), 7000);
         }
-      }, 200); // intervalo mais curto
+      }, 200);
     }
   </script>
 </body>
