@@ -17,24 +17,19 @@
     }
 
     .spotify {
-      margin-top: 20px;
+      background-color: #ffc0cb33;
+      padding: 15px;
+      border-radius: 20px;
+      width: 85%;
+      margin: 20px auto;
+      box-shadow: 0 0 10px #ffb6c1;
       z-index: 1;
     }
-
-    .spotify-frame {
-  display: inline-block;
-  padding: 6px;
-  border: 2px solid rgba(255, 0, 0, 0.6);
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
-}
-
 
     .frase-musica {
       color: #ffb6c1;
       font-size: 18px;
       margin-top: 10px;
-      white-space: pre-line;
     }
 
     .carrossel-container {
@@ -104,11 +99,10 @@
   </style>
 </head>
 <body>
+
   <div class="spotify">
-    <div class="spotify-frame">
-      <iframe src="https://open.spotify.com/embed/track/7c3fcuC9lr7SMof9nGje2F?utm_source=generator" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border-radius:12px"></iframe>
-    </div>
-    <div class="frase-musica">Nosso amor veio de outras vidas<br>e eu vou te amar nas outras vidas que virão</div>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7c3fcuC9lr7SMof9nGje2F?utm_source=generator" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="frase-musica">Nosso amor veio de outras vidas,<br>eu vou te amar nas outras vidas que virão</div>
   </div>
 
   <div class="carrossel-container">
@@ -195,3 +189,4 @@
   </script>
 </body>
 </html>
+
