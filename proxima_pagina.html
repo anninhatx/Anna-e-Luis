@@ -25,7 +25,6 @@
       color: #ffb6c1;
       font-size: 18px;
       margin-top: 10px;
-      white-space: pre-line;
     }
 
     .carrossel-container {
@@ -96,8 +95,8 @@
 </head>
 <body>
   <div class="spotify">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7c3fcuC9lr7SMof9nGje2F?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    <div class="frase-musica">Nosso amor veio de outras vidas,<br>eu vou te amar nas outras vidas que virão</div>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1DuJbbC8fbZY06dcXx4IhP?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="frase-musica">você é a sorte e a sortuda sou eu!</div>
   </div>
 
   <div class="carrossel-container">
@@ -143,7 +142,7 @@
       const segundos = Math.floor((diff / 1000) % 60);
 
       document.getElementById('contador').innerText =
-        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+        ${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos;
     }
 
     setInterval(atualizarContador, 1000);
@@ -156,7 +155,7 @@
 
     setInterval(() => {
       index = (index + 1) % totalSlides;
-      carrossel.style.transform = `translateX(-${index * 320}px)`;
+      carrossel.style.transform = translateX(-${index * 320}px);
     }, 3000);
 
     // Chuva de corações
@@ -184,4 +183,3 @@
   </script>
 </body>
 </html>
-
