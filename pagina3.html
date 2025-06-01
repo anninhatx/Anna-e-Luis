@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Livro se Abrindo</title>
+  <meta charset="UTF-8">
+  <title>Nosso Livro</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,106 +17,98 @@
       font-family: 'EB Garamond', serif;
     }
 
-    .book-container {
-      perspective: 2000px;
-      position: relative;
-    }
-
-    .book {
-      width: 600px;
+    .livro-fechado {
+      width: 300px;
       height: 400px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 2s ease;
-      cursor: pointer;
-    }
-
-    .book.opened {
-      transform: rotateY(-160deg);
-    }
-
-    .cover,
-    .back-cover,
-    .pages {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+      background: url('livro.jpg') center/cover no-repeat;
       border: 2px solid #5e3b1e;
       border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s;
     }
 
-    .cover {
-      transform-origin: left;
-      transform: rotateY(0deg);
-      z-index: 3;
-      background: url('livro.jpg') center/cover no-repeat;
+    .livro-fechado:hover {
+      transform: scale(1.02);
     }
 
-    .pages {
+    #book {
+      width: 800px;
+      height: 500px;
+      display: none;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    }
+
+    .page {
       background: #fefaf3;
-      z-index: 2;
-      transform: translateZ(-1px);
+      border: 1px solid #c7b299;
       padding: 40px;
       box-sizing: border-box;
       color: #3b2f1d;
       font-size: 20px;
       line-height: 1.6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: justify;
-      border: 1px solid #c7b299;
-      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 1s ease 1s;
+      position: relative;
     }
 
-    .book.opened .pages {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .back-cover {
-      background: #8b5e3c;
-      transform: rotateY(180deg);
-      transform-origin: right;
-      z-index: 1;
-    }
-
-    .click-hint {
+    .page::before {
+      content: '';
       position: absolute;
-      bottom: -50px;
-      color: white;
-      font-family: serif;
-      font-size: 16px;
-      opacity: 0.6;
-      text-align: center;
-      width: 100%;
+      top: 10px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      border: 2px dashed #b79e7d;
+      pointer-events: none;
     }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 14px;
+      color: #5a4632;
+    }
+
+    .voltar {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: none;
+      border: 1px solid #fff;
+      color: white;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-family: serif;
+    }
+
   </style>
 </head>
 <body>
-  <div class="book-container">
-    <div class="book" id="book">
-      <div class="cover"></div>
-      <div class="pages">
-        <div>
-          Se sei que você virá, por exemplo, às quatro da tarde, às três já começarei a me sentir feliz.
-          E quanto mais a hora avançar, mais feliz ficarei.
-          Às quatro em ponto, toda animada, provarei o sabor da felicidade!
-        </div>
-      </div>
-      <div class="back-cover"></div>
+
+  <div class="livro-fechado" id="abrirLivro"></div>
+
+  <div id="book">
+    <div class="page">
+      Se sei que você virá, por exemplo, às quatro da tarde, às três já começarei a me sentir feliz.<br><br>
+      E quanto mais a hora avançar, mais feliz ficarei.<br><br>
+      Às quatro em ponto, toda animada, provarei o sabor da felicidade!
+      <div class="footer">99</div>
     </div>
-    <div class="click-hint">Clique no livro para abrir</div>
+    <div class="page"></div> <!-- Página em branco para virar -->
   </div>
 
+  <button class="voltar" onclick="history.back()">Página anterior</button>
+
   <script>
-    const book = document.getElementById('book');
-    book.addEventListener('click', () => {
-      book.classList.toggle('opened');
+    $('#abrirLivro').on('click', function() {
+      $(this).hide();
+      $('#book').show().turn({
+        width: 800,
+        height: 500,
+        autoCenter: true
+      });
     });
   </script>
+
 </body>
 </html>
