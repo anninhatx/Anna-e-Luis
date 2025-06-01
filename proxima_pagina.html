@@ -67,14 +67,24 @@
     .mensagem {
       max-width: 600px;
       margin: 0 auto;
-      line-height: 1.6;
       font-size: 16px;
       border-top: 1px solid #666;
       padding-top: 20px;
       margin-bottom: 50px;
       z-index: 1;
       position: relative;
-      white-space: pre-line;
+      text-align: left;
+    }
+
+    .mensagem p {
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .mensagem p:last-child {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 24px;
     }
 
     .heart {
@@ -171,27 +181,37 @@
       setTimeout(() => heart.remove(), 6000);
     }, 300);
 
-    // Efeito máquina de escrever com quebras de linha
-    const texto = `Meu amor, a cada dia que passa, meu coração se enche mais de carinho e admiração por você. 
+    // Mensagem com parágrafos e efeito máquina de escrever
+    const paragrafos = [
+      "Meu amor, a cada dia que passa, meu coração se enche mais de carinho e admiração por você.",
+      "A nossa conexão não é nenhuma novidade. Desde o momento zero, ela estava lá. Mesmo que a gente não fizesse ideia disso. Os anos foram se passando e essa conexão se aprofundando... E eu me sinto tão, tão privilegiada do universo ter alinhado nossos caminhos.",
+      "O que a gente tem é lindo e é raro: viver um relacionamento assim, tranquilo, cheio de amor, compreensão, acolhimento e tantas outras qualidades que a gente conseguiu juntos.",
+      "Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado.",
+      "Eu te amo, Luis!❤️"
+    ];
 
-A nossa conexão não é nenhuma novidade. Desde o momento zero, ela estava lá. Mesmo que a gente não fizesse ideia disso. Os anos foram se passando e essa conexão se aprofundando... E eu me sinto tão, tão privilegiada do universo ter alinhado nossos caminhos.  
-
-O que a gente tem é lindo e é raro: viver um relacionamento assim, tranquilo, cheio de amor, compreensão, acolhimento e tantas outras qualidades que a gente conseguiu juntos. 
-
-Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado.
-
-Eu te amo, Luis!❤️`;
-
-    let i = 0;
+    let i = 0, j = 0;
     function digitar() {
-      if (i < texto.length) {
-        document.getElementById('mensagemFinal').innerHTML += texto.charAt(i);
-        i++;
-        setTimeout(digitar, 15);
+      if (i < paragrafos.length) {
+        const p = document.createElement('p');
+        document.getElementById('mensagemFinal').appendChild(p);
+
+        function escreverLetra() {
+          if (j < paragrafos[i].length) {
+            p.innerHTML += paragrafos[i].charAt(j);
+            j++;
+            setTimeout(escreverLetra, 15);
+          } else {
+            i++;
+            j = 0;
+            setTimeout(digitar, 300);
+          }
+        }
+
+        escreverLetra();
       }
     }
     digitar();
   </script>
-
 </body>
 </html>
