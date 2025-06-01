@@ -1,114 +1,124 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Nosso Livro</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'EB Garamond', serif;
-    }
+<meta charset="UTF-8" />
+<title>Envelope com Carta</title>
+<style>
+  body {
+    background: #f5f0e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Dancing Script', cursive;
+    user-select: none;
+  }
 
-    .livro-fechado {
-      width: 300px;
-      height: 400px;
-      background: url('livro.jpg') center/cover no-repeat;
-      border: 2px solid #5e3b1e;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-      transition: transform 0.3s;
-    }
+  /* Container do envelope */
+  .envelope-container {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    cursor: pointer;
+  }
 
-    .livro-fechado:hover {
-      transform: scale(1.02);
-    }
+  /* Envelope fechado */
+  .envelope {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background: #d9c9b6;
+    border: 2px solid #a68a6c;
+    border-radius: 8px 8px 5px 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    z-index: 2;
+  }
 
-    #book {
-      width: 800px;
-      height: 500px;
-      display: none;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-    }
+  /* O "topo" do envelope - a aba */
+  .envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100px;
+    background: #c1ad93;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: bottom center;
+    transition: transform 0.6s ease;
+    z-index: 3;
+  }
 
-    .page {
-      background: #fefaf3;
-      border: 1px solid #c7b299;
-      padding: 40px;
-      box-sizing: border-box;
-      color: #3b2f1d;
-      font-size: 20px;
-      line-height: 1.6;
-      position: relative;
-    }
+  /* Carta que sai do envelope */
+  .letter {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    width: 240px;
+    height: 160px;
+    background: #fff9f0;
+    border: 1px solid #d2bfae;
+    border-radius: 4px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    padding: 25px 30px;
+    box-sizing: border-box;
+    color: #6b4c32;
+    font-size: 22px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    pointer-events: none;
+    z-index: 1;
+  }
 
-    .page::before {
-      content: '';
-      position: absolute;
-      top: 10px;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      border: 2px dashed #b79e7d;
-      pointer-events: none;
-    }
+  /* Quando o envelope abrir */
+  .envelope-container.open .envelope::before {
+    transform: rotateX(-140deg);
+  }
 
-    .footer {
-      position: absolute;
-      bottom: 10px;
-      right: 20px;
-      font-size: 14px;
-      color: #5a4632;
-    }
+  .envelope-container.open .letter {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-    .voltar {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background: none;
-      border: 1px solid #fff;
-      color: white;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-family: serif;
-    }
-
-  </style>
+  /* Pequeno efeito de sombra ao passar no envelope */
+  .envelope-container:hover .envelope {
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <div class="livro-fechado" id="abrirLivro"></div>
-
-  <div id="book">
-    <div class="page">
-      Se sei que você virá, por exemplo, às quatro da tarde, às três já começarei a me sentir feliz.<br><br>
-      E quanto mais a hora avançar, mais feliz ficarei.<br><br>
-      Às quatro em ponto, toda animada, provarei o sabor da felicidade!
-      <div class="footer">99</div>
-    </div>
-    <div class="page"></div> <!-- Página em branco para virar -->
+<div class="envelope-container" id="envelopeContainer" aria-label="Clique para abrir a carta" role="button" tabindex="0">
+  <div class="envelope"></div>
+  <div class="letter">
+    Se sei que você virá, por exemplo, às quatro da tarde, às três já começarei a me sentir feliz.<br><br>
+    E quanto mais a hora avançar, mais feliz ficarei.<br><br>
+    Às quatro em ponto, toda animada, provarei o sabor da felicidade!
   </div>
+</div>
 
-  <button class="voltar" onclick="history.back()">Página anterior</button>
+<script>
+  const container = document.getElementById('envelopeContainer');
 
-  <script>
-    $('#abrirLivro').on('click', function() {
-      $(this).hide();
-      $('#book').show().turn({
-        width: 800,
-        height: 500,
-        autoCenter: true
-      });
-    });
-  </script>
+  function toggleEnvelope() {
+    container.classList.toggle('open');
+  }
+
+  container.addEventListener('click', toggleEnvelope);
+  container.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleEnvelope();
+    }
+  });
+</script>
 
 </body>
 </html>
