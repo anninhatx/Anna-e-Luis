@@ -92,18 +92,6 @@
       0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
-
-    .botao-proxima {
-      background-color: #ff69b4;
-      color: white;
-      font-family: 'Patrick Hand', cursive;
-      font-size: 18px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-bottom: 40px;
-    }
   </style>
 </head>
 <body>
@@ -182,8 +170,13 @@
       setTimeout(() => heart.remove(), 6000);
     }, 300);
 
-    // Efeito máquina de escrever
-    const texto = "A cada dia que passa, meu coração se enche mais de carinho e admiração por você. Cada sorriso seu ilumina o meu mundo, e cada abraço me faz sentir que estou exatamente onde deveria estar. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!❤️";
+    // Efeito máquina de escrever com novo texto
+    const texto = `Meu amor, a cada dia que passa, meu coração se enche mais de carinho e admiração por você. 
+A nossa conexão não é nenhuma novidade. Desde o momento zero, ela estava lá. Mesmo que a gente não fizesse ideia disso. Os anos foram se passando e essa conexão se aprofundando... E eu me sinto tão, tão privilegiada do universo ter alinhado nossos caminhos.  
+O que a gente tem é lindo e é raro: viver um relacionamento assim, tranquilo, cheio de amor, compreensão, acolhimento e tantas outras qualidades que a gente conseguiu juntos. 
+Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado.
+Eu te amo, Luis!❤️`;
+
     let i = 0;
     function digitar() {
       if (i < texto.length) {
@@ -195,7 +188,5 @@
     digitar();
   </script>
 
-  <!-- Botão de próxima página -->
-  <button class="botao-proxima" onclick="window.location.href='pagina3.html'">Próxima Página</button>
 </body>
 </html>
