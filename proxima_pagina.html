@@ -1,163 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eu te amo, Luis!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: 'Patrick Hand', cursive;
-      text-align: center;
-      margin: 0;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .spotify {
-      margin-top: 20px;
-      z-index: 1;
-    }
-
-    .frase-musica {
-      color: #ffb6c1;
-      font-size: 18px;
-      margin-top: 10px;
-      white-space: pre-line;
-    }
-
-    .carrossel-container {
-      position: relative;
-      width: 320px;
-      height: 320px;
-      margin: 30px auto;
-      overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-      z-index: 1;
-    }
-
-    .carrossel {
-      display: flex;
-      width: 9999px;
-      height: 100%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carrossel img {
-      width: 320px;
-      height: 320px;
-      object-fit: cover;
-      border-radius: 20px;
-      flex-shrink: 0;
-    }
-
-    .titulo {
-      font-size: 24px;
-      margin-top: 20px;
-    }
-
-    .contador {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    .mensagem {
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 18px;
-      border-top: 1px solid #666;
-      padding: 20px 24px 60px 24px;
-      text-align: justify;
-      line-height: 1.6;
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
-      background-size: contain;
-      animation: fall 6s linear forwards;
-      opacity: 0.3;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-50px) rotate(0deg); opacity: 0.5; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    .botao-proxima {
-      background-color: #ff69b4;
-      color: white;
-      font-family: 'Patrick Hand', cursive;
-      font-size: 18px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-bottom: 40px;
-    }
-  </style>
-</head>
-<body>
-  <div class="spotify">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7c3fcuC9lr7SMof9nGje2F?utm_source=generator" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    <div class="frase-musica">Nosso amor veio de outras vidas<br>e eu vou te amar nas outras vidas que virão</div>
-  </div>
-
-  <div class="carrossel-container">
-    <div class="carrossel" id="carrossel">
-      <img src="foto2.jpg" alt="Foto 2" />
-      <img src="foto1.jpg" alt="Foto 1" />
-      <img src="foto3.jpg" alt="Foto 3" />
-      <img src="foto4.jpg" alt="Foto 4" />
-      <img src="foto5.jpg" alt="Foto 5" />
-      <img src="foto6.jpg" alt="Foto 6" />
-    </div>
-  </div>
-
-  <div class="titulo">eu te amo há</div>
-  <div class="contador" id="contador"></div>
-
-  <div class="mensagem" id="mensagemFinal"></div>
-
-  <script>
-    // Contador desde 04/06/2022
-    function atualizarContador() {
-      const inicio = new Date('2022-06-04T00:00:00');
-      const agora = new Date();
-
-      let anos = agora.getFullYear() - inicio.getFullYear();
-      let meses = agora.getMonth() - inicio.getMonth();
-      let dias = agora.getDate() - inicio.getDate();
-
-      if (dias < 0) {
-        meses--;
-        const mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
-        dias += mesAnterior.getDate();
-      }
-
-      if (meses < 0) {
-        anos--;
-        meses += 12;
-      }
-
-      const diff = agora - inicio;
-      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutos = Math.floor((diff / (1000 * 60)) % 60);
-      const segundos = Math.floor((diff / 1000) % 60);
-
-      document.getElementById('contador').innerText =
-        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
-    }
-
-    setInterval(atualizarContador, 1000);
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
     atualizarContador();
+    setInterval(atualizarContador, 1000);
 
     // Carrossel automático
     const carrossel = document.getElementById('carrossel');
@@ -180,5 +24,46 @@
       setTimeout(() => heart.remove(), 6000);
     }, 300);
 
-    // Efeito máquina de escrever
-    const texto = "Meu amor, a cada dia que passa, meu coração se enche mais de carinho e admiração por você. A nossa conexão não é nenhuma novidade. Desde o momento zero, ela estava lá. Mesmo que a gente não fizesse ideia disso. Os anos foram se passando e essa conexão se aprofundando... E eu me sinto tão, tão privilegiada do universo ter alinhado nossos caminhos. O que a gente tem é lindo e é raro: viver um relacionamento assim, tra
+    // Texto com efeito de digitação
+    const texto = "Meu amor, a cada dia que passa, meu coração se enche mais de carinho e admiração por você. A nossa conexão não é nenhuma novidade. Desde o momento zero, ela estava lá. Mesmo que a gente não fizesse ideia disso. Os anos foram se passando e essa conexão se aprofundando... E eu me sinto tão, tão privilegiada do universo ter alinhado nossos caminhos. O que a gente tem é lindo e é raro: viver um relacionamento assim, tranquilo, cheio de amor, compreensão, acolhimento e tantas outras qualidades que a gente conseguiu juntos. Você é a razão dos meus melhores pensamentos, e tudo ao seu lado se torna mais bonito e significativo. Quero compartilhar toda a minha vida ao seu lado. Eu te amo, Luis!❤️";
+    
+    let i = 0;
+    function digitar() {
+      if (i < texto.length) {
+        document.getElementById('mensagemFinal').innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(digitar, 15);
+      }
+    }
+    digitar();
+  });
+
+  // Contador separado para funcionar no load
+  function atualizarContador() {
+    const inicio = new Date('2022-06-04T00:00:00');
+    const agora = new Date();
+
+    let anos = agora.getFullYear() - inicio.getFullYear();
+    let meses = agora.getMonth() - inicio.getMonth();
+    let dias = agora.getDate() - inicio.getDate();
+
+    if (dias < 0) {
+      meses--;
+      const mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
+      dias += mesAnterior.getDate();
+    }
+
+    if (meses < 0) {
+      anos--;
+      meses += 12;
+    }
+
+    const diff = agora - inicio;
+    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diff / (1000 * 60)) % 60);
+    const segundos = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('contador').innerText =
+      `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+  }
+</script>
