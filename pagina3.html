@@ -1,100 +1,145 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Página 3 - O Pequeno Príncipe</title>
   <style>
     body {
       margin: 0;
+      background-color: #000;
       font-family: 'Georgia', serif;
-      background-color: #fdfcf6;
-      overflow: hidden;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       height: 100vh;
+      color: white;
+    }
+
+    .book-container {
+      position: relative;
+      width: 320px;
+      height: 480px;
+      perspective: 1500px;
     }
 
     .book {
-      width: 300px;
-      height: 400px;
-      background-image: url('capa-livro.jpg'); /* substitua pelo nome da capa enviada */
-      background-size: cover;
-      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
       transition: transform 1s;
-      position: relative;
-      z-index: 1;
+      cursor: pointer;
     }
 
     .book.open {
-      transform: rotateY(180deg);
+      transform: rotateY(-180deg);
     }
 
     .page {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      background: white url('estrelinhas.png') repeat;
-      background-size: contain;
-      padding: 40px 30px;
-      box-sizing: border-box;
-      font-size: 18px;
-      line-height: 1.6;
-      transform: rotateY(180deg);
+      background: white;
       backface-visibility: hidden;
-      border: 1px solid #ddd;
-      z-index: 2;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      border-radius: 8px;
     }
 
-    .page .ilustracao {
-      display: block;
-      margin: 20px auto 10px;
-      width: 120px;
+    .front {
+      background-image: url('https://upload.wikimedia.org/wikipedia/pt/5/5e/O_Pequeno_Principe_capa.png');
+      background-size: cover;
+      background-position: center;
     }
 
-    .page .numero {
+    .back {
+      transform: rotateY(180deg);
+      background-color: white;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quote {
+      font-size: 1.1rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .stars-frame {
+      border: 2px dashed #ccc;
+      padding: 10px;
+      border-radius: 12px;
+      position: relative;
+      margin-top: 15px;
+    }
+
+    .stars-frame::before, .stars-frame::after {
+      content: '★ ★ ★';
+      color: #ccc;
       position: absolute;
-      bottom: 20px;
-      right: 30px;
-      font-size: 12px;
-      color: #999;
+      width: 100%;
+      text-align: center;
+      font-size: 0.8rem;
     }
 
-    .voltar {
+    .stars-frame::before {
+      top: -18px;
+    }
+
+    .stars-frame::after {
+      bottom: -18px;
+    }
+
+    .illustration {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    .page-number {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .nav-button {
       position: absolute;
       top: 20px;
       left: 20px;
-      background-color: #eaeaea;
-      padding: 8px 12px;
+      background: #eee;
+      color: #111;
       border: none;
-      border-radius: 8px;
-      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 6px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <button class="voltar" onclick="window.location.href='pagina2.html'">⬅ Página anterior</button>
-
-  <div class="book" onclick="abrirLivro()">
-    <div class="page" id="pagina">
-      <p>
-        Se sei que você virá, por exemplo, às quatro da tarde, às três já começarei a me sentir feliz.<br>
-        E quanto mais a hora avançar, mais feliz ficarei.<br>
-        Às quatro em ponto, toda animada, provarei o sabor da felicidade!
-      </p>
-      <img src="ilustracao.jpg" alt="Ilustração Pequeno Príncipe" class="ilustracao">
-      <div class="numero">99</div>
+  <button class="nav-button" onclick="history.back()">⬅ Página anterior</button>
+  <div class="book-container" onclick="abrirLivro()">
+    <div class="book" id="livro">
+      <div class="page front"></div>
+      <div class="page back">
+        <div class="quote">
+          "Se tu vens, por exemplo, às quatro da tarde, desde as três eu começarei a ser feliz."
+        </div>
+        <div class="stars-frame">
+          <img class="illustration" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Le_Petit_Prince_drawing_by_Saint-Exupery.jpg/440px-Le_Petit_Prince_drawing_by_Saint-Exupery.jpg" alt="Ilustração do Pequeno Príncipe" />
+        </div>
+        <div class="page-number">Página 99</div>
+      </div>
     </div>
   </div>
 
   <script>
     function abrirLivro() {
-      document.querySelector('.book').classList.add('open');
-      document.getElementById('pagina').style.zIndex = 3;
+      document.getElementById('livro').classList.toggle('open');
     }
   </script>
 </body>
